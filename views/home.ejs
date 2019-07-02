@@ -1,44 +1,11 @@
 <% include partials/header %> 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="/"><i class="fas fa-graduation-cap fa-lg text-success"></i> Mes Certificats</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About Us</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0"action="/results" method="GET">
-                <input class="form-control mr-sm-2" type="text" name="searchquery" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </div>
-</nav>
+<% include partials/navigation %> 
 
 <div class="container">
-    <div class="jumbotron">
-        <h1 class="display-3">Mes Compétences Certifiées</h1>
-        <p class="lead">Ici pour chercher un Certificat spécifique</p>
-        <hr class="my-4">
-        <!--Form for searching movie with movie name -->
-        <form class="form-group" action="/results" method="GET"> 
-            <input type="text" class="form-control" name="searchquery" placeholder="Rechercher un Certificat">
-            <button type="submit" class="btn btn-primary"> <i class="fas fa-search"></i> Recherche</button>
-        </form>
-    </div>
-    
+    <!--Jumbotron -->
+    <% include partials/jumbotrons %> 
+
     <!--Trending-->
     <div class="row"> 
         <!-- loop -->   
@@ -47,7 +14,7 @@
             <div class="thumbnail moviecard">
                 <div style="text-align: center">
                 	<% var imdblink = "https://www.imdb.com/title/" + certifs[i].id %> 
-                    <a href="/moviedetails/<%= certifs[i].id %>">
+                    <a href="/certifdetails/<%= certifs[i].id %>">
                     	<img width=100% src = <%= certifs[i].urlpng %> alt="Image Not Available" onerror="this.onerror=null;this.src='Images/notfound.jpg';">
                     	<div>
                             <span class="title"><%= certifs[i].titre %></span></a>

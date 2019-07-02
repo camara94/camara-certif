@@ -246,3 +246,23 @@ h2{
 	opacity: .8;
 	cursor: pointer;
 }
+
+#imgd {
+	width: 100%;
+	height: 75%;
+	margin:20px auto;
+}
+
+/*#imgdd {
+	width: 600px;
+	height: 400px;
+	margin:20px auto;
+}*/
+
+.taille{
+	height: 350px;
+}
+
+#rch:hover {
+	width: 500px;
+}

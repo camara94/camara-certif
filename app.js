@@ -53,7 +53,7 @@ app.get("/",function(req, res){
                     dateCertif: data.result.certificats[0].dateCertif 
                 });
 
-                if(certifs.length == 20){
+                if(certifs.length > certs.length-1){
                         // console.log(movie);
                         res.render("home", {certifs: certifs});
                     }
@@ -66,28 +66,31 @@ app.get("/",function(req, res){
 
 
 
-/*app.get("/certifdetails/:id", function(req, res){
-    var id = req.params.id;
+app.get("/certifdetails/:idcertif", function(req, res){
+    var idcertif = req.params.idcertif;
 
     var options = {
-        url = "http://camaratek.com/api/views/formation.php?id=" + id,
+        url: "http://camaratek.com/api/views/formation.php?id=" + idcertif,
         json: true
     }
 
     rp(options)
     .then(function(data){
-        var certif = [];
+        var clickedcertif = [];
             // console.log(data)
-            certif.push({
+            clickedcertif.push({
                 id: data.result.certificats[0].id,
                 titre: data.result.certificats[0].titre,
                 numCert: data.result.certificats[0].numCert,
                 urlpng: data.result.certificats[0].urlpng,
                 description: data.result.certificats[0].description,
                 auteur: data.result.certificats[0].auteur,
-                dateCertif: data.result.certificats[0].plateforme,
-                universite: data.result.certificats[0].universite  
+                dateCertif: data.result.certificats[0].dateCertif,
+                universite: data.result.certificats[0].universite,
+                url: data.result.certificats[0].url,  
+                plateforme: data.result.certificats[0].plateforme
             })
+            
 
             var dict = {};
             var csvdata = [];
@@ -106,22 +109,62 @@ app.get("/",function(req, res){
                     for (var i=0;i<csvdata.length;i++){
                         dict[csvdata[i].imdbId] = csvdata[i].youtubeId;
                     } 
-                    var trailerlink = dict[clickedmovie[0].imdbid.substring(2,).replace(/^0+/, '')];
-                    res.render("moviedetails",{clickedmovie: clickedmovie, trailerlink: trailerlink}) 
+                    //var trailerlink = dict[clickedcertif0].imdbid.substring(2,).replace(/^0+/, '')];
+                    res.render("certifdetails",{clickedcertif: clickedcertif}) 
                 });
         });
-});*/
 
 
+});
 
 
+app.get("/about",function(req, res){
+    res.render("about");
+});
+
+app.get("/contact",function(req, res){
+    res.render("contact");
+});
+
+app.get("/results",function(req, res){
+
+    var listcertif = [];
+    rp(options)
+    .then(function(data) {
+        for(var i=0;i<data.result.certificats.length;i++){
+            listcertif.push(data.result.certificats);
+        }
+
+
+        //verication de id 
+        if (req.query.searchquery == 0 || req.query.searchquery > listcertif.length)
+            searchquery = 404;
+        else
+            searchquery = req.query.searchquery;
+
+        console.log(searchquery);
+        console.log(listcertif.length);
+        var taille = listcertif.length;
+        var uri= "http://camaratek.com/api/views/formation.php?id=" + searchquery;
+        console.log(uri);
+       request(uri, function(error,response,body){
+            if(!error && response.statusCode==200){
+                var certif = JSON.parse(body);
+                console.log(certif.result.certificats);
+                var cert = certif.result.certificats;
+                res.render("results", {cert: cert, searchquery: searchquery, taille: taille});
+            }
+        });
+
+    });
+});
 
 
 app.get("*", function(req, res){
     res.send("Error!! Sorry, Page Not Found");
 });
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4800;
 app.listen(port, function(){
-    console.log("Movie App has started on port: " + port);
+    console.log("Les certif de Camara started on port: " + port);
 });

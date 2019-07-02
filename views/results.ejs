@@ -1,75 +1,58 @@
 <% include partials/header %> 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="/"><i class="fas fa-film"></i> MovieSSS</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li>
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About Us</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0"action="/results" method="GET">
-                <input class="form-control mr-sm-2" type="text" name="searchquery" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </div>  
-</nav>
+<% include partials/navigation %> 
 
-<div class="container">
-        <form class="form-group" action="/results" method="GET"> 
-            <input type="text" class="form-control" name="searchquery" placeholder="Search Movie">
-            <button type="submit" class="btn btn-primary"> <i class="fas fa-search"></i> Search</button>
-        </form>
-</div>
 
-<div class="container">
 
-    <% if(movies.Response == "False") { %>
+<div class="container" id="cm">
+        <!--Jumbotron -->
+    <% include partials/jumbotrons %> 
+
+        <% if(searchquery == 404 ) { %>
         <div class="card text-white bg-warning mb-3" style="max-width: 20rem;">
           <div class="card-header">ERROR!!</div>
           <div class="card-body">
-            <h4 class="card-title">SORRY!!</h4>
-            <p class="card-text"><%= movies.Error %></p>
+            <h4 class="card-title">Désolé les id (1 et <%= taille %>!!)</h4>
+            <p class="card-text">404 - Not Found</p>
           </div>
         </div>
     <% } else { %>
         <div class="row">
 
-           <% for (var i = 0; i < movies.Search.length; i++) { %>
-                <% var imdbid = movies.Search[i].imdbID %> 
+           <% for (var i = 0; i < cert.length; i++) { %>
 
-                <% if(movies.Search[i].Poster != "N/A") { %> 
-                    <div class="col-lg-3 col-md-4 col-sm-6">
+                
+                    <div class="col-lg-6 col-md-4 col-sm-6">
                         <div class="thumbnail moviecard" >
                             <div class="block" style="text-align: center">
-                                <a href="/moviedetails/<%= imdbid %>">
-                                <img src="<%= movies.Search[i].Poster %>" alt="Image Not Available" onerror="this.onerror=null;this.src='Images/notfound.jpg';">
+                                <a href="/moviedetails/"></a>
+                                <img id="imgdd" src="<%= cert[i].urlpng %>" alt="Image Not Available" onerror="this.onerror=null;this.src='Images/notfound.jpg';">
                                 <div>
-                                    <%= movies.Search[i].Title %></a>
-                                    <span class="year">(<%= movies.Search[i].Year %>)</span>
+                                    <%= cert[i].titre %>
+                                    <span class="year"><%= cert.plateforme %></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <% } %> 
+                    <div class="col-lg-6 col-md-7 col-sm-6 ml-50">
+                        <div class="thumbnail moviecard" >
+                            <div class="block" style="text-align: center"> 
+                                <div>
+                                    <h3><%= cert[i].titre %></h3><hr>
+                                    <h6>Auteur du cours : <%=cert[i].auteur %></h6>
+                                    <h6>Plateforme : <%=cert[i].plateforme %></h6>
+                                    <h6>Date d'obtention : <%= cert[i].dateCertif.split("-")[2][0]+''+cert[i].dateCertif.split("-")[2][1]+'/'+cert[i].dateCertif.split("-")[1]+'/'+cert[i].dateCertif.split("-")[0] %></h6>
+                                    <h6>Description</h6>
+                                    <span class="year"><%= cert[i].description %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
             <% } %>
 
         </div>    
     <% } %> 
-
 </div>
 
 <% include partials/footer %>
