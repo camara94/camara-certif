@@ -249,8 +249,8 @@ h2{
 
 #imgd {
 	width: 100%;
-	height: 75%;
-	margin:20px auto;
+	/*height: 70%;*/
+	/*margin:20px auto;*/
 }
 
 /*#imgdd {
@@ -265,4 +265,8 @@ h2{
 
 #rch:hover {
 	width: 500px;
+}
+
+footer {
+	margin-top: 30px;
 }
