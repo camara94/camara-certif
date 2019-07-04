@@ -44,6 +44,7 @@ app.get("/",function(req, res){
             rp(options)
             .then(function(data) {
                 //console.log(data.result.certificats[0].urlpng);
+                console.log(data.result.certificats[0].id);
                 certifs.push({
                     id: data.result.certificats[0].id,
                     titre: data.result.certificats[0].titre,
